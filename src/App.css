@@ -1,0 +1,156 @@
+/* Overall game container for centering and layout */
+#game {
+  align-content: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+}
+
+/* Game start button */
+#gamestart {
+  background-color: rgba(224, 87, 8, 0.925);
+  font-size: 40px;
+  border: none;
+  font-family: sans-serif;
+  color: whitesmoke;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0 8px;
+  margin: 0;
+  animation: blink 1.5s infinite;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 15%;
+  margin-top: 23%;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Container for the cards grid */
+.game-container {
+  display: grid;
+  grid-template-columns: repeat(3, 150px); /*3 cards per row with fixed size */
+  grid-template-rows: repeat(150px);
+  grid-gap: 15px; 
+  justify-content: center; 
+  margin-top: 50px;
+}
+.game-container.easy {
+  display: grid;
+  grid-template-columns: repeat(3, 150px); /* 3 cards per row for easy */
+  justify-content: center;
+}
+.game-container.medium {
+  grid-template-columns: repeat(4, 150px); /* 4 cards per row for medium */
+}
+.game-container.hard {
+  grid-template-columns: repeat(4, 150px); /* 4 cards per row for hard */
+}
+
+/* Individual card styling */
+.card {
+  width: 150px;
+  height: 150px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #87ceeb; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.3s ease-in-out;
+  
+}
+
+.card:hover {
+  transform: scale(1.05); 
+}
+
+.card img {
+  width: 100%; 
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Back of the card (before flipping) */
+.card-back {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333; /* Dark gray back color */
+  color: white; /* White text color */
+  font-size: 24px; /* Text size */
+  border-radius: 8px;
+  font-family: sans-serif;
+  margin-top: 0;
+}
+/*  body styling for background */
+body {
+  background-image: url(https://img.freepik.com/premium-vector/technology-hexagon-dark-futuristic-abstract-vector-background-with-pink-blue-colored-bright-flashes-hexagon-hexagonal-gaming-honeycomb-abstract-background_156943-959.jpg?semt=ais_hybrid);
+  background-size: cover; /* Ensure the image covers the entire page */
+  background-position: center; /* Center the image */
+  background-attachment: fixed; /* Keep the background fixed during scroll */
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  width: 100%;
+
+}
+.controls{
+  color:white
+}
+.headings > h1{
+  text-align: center;
+}
+
+.para{
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  font: bolder;
+}
+.para1{
+  margin-right:80px ;
+  background-color: burlywood;
+  color:black;
+  padding: 0 9px;
+}
+.para2{
+ 
+  background-color: rgb(153, 245, 209);
+  color:black;
+  padding: 0 9px;
+  margin-right:90px ;
+}
+#btn{
+  border: none;
+  margin-left: 1150px;
+
+}
+#btn > button{
+  border: none;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.041);
+  font-weight:bolder ;
+  font-size: large;
+}
+.para > button{
+  padding: 3px 20px;
+  height: 40%;
+  margin-top: 16px;
+  background-color: rgb(250, 96, 96);
+  border: none;
+}

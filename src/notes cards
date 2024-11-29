@@ -1,0 +1,17 @@
+1. What is the Card Component?
+
+The Card component is a simple presentation component that:
+
+    Receives props (card, onClick, and isFlipped).
+    Renders the card either face up (showing the image) or face down (showing the back side of the card) based on the isFlipped prop.
+
+card: This prop is an object that contains information about the card (its image and name).
+onClick: This prop is a function that gets executed when the user clicks the card. It will handle the logic for flipping cards, checking for matches, etc.
+isFlipped: This boolean prop tells the Card component whether to show the card's front (image) or the back (hidden).
+
+Step 1: Initial Render of the Card
+
+    When the game first starts, each card component is rendered with:
+        isFlipped = false (cards are not flipped initially).
+        onClick function is passed, which contains the logic to handle the card click (to flip the card, check matches, etc.).
+        The card object is passed, containing the card's image URL and name.

@@ -1,0 +1,167 @@
+        Execution:
+            key={card.id}: key is set to 0.
+            card={card}: The card prop receives the full card object {id: 0, name: 'card1', image: 'link1'}.
+            onClick={() => handleCardClick(card.id)}: The onClick prop is set to an arrow function that calls handleCardClick(0) when clicked.
+            isFlipped={flippedCards.includes(card.id) || matchedCards.includes(card.id)}:
+                flippedCards.includes(0): This is false because flippedCards is currently an empty array.
+                matchedCards.includes(0): This is also false because matchedCards is an empty array.
+                Therefore, isFlipped evaluates to false.
+
+    Output for the First <Card>:
+        The first <Card> component is rendered with the following props:
+            key={0}
+            card={ {id: 0, name: 'card1', image: 'link1'} }
+            onClick={() => handleCardClick(0)}
+            isFlipped={false}
+
+Iteration 2: card = {id: 1, name: 'card2', image: 'link2'}
+
+    Rendering the Second <Card> Component:
+        Execution:
+            key={card.id}: key is set to 1.
+            card={card}: The card prop receives the full card object {id: 1, name: 'card2', image: 'link2'}.
+            onClick={() => handleCardClick(card.id)}: The onClick prop is set to an arrow function that calls handleCardClick(1) when clicked.
+            isFlipped={flippedCards.includes(card.id) || matchedCards.includes(card.id)}:
+                flippedCards.includes(1): This is false.
+                matchedCards.includes(1): This is also false.
+
+
+
+
+                import Card from './card.jsx'; // Import the Card component
+
+// Define card images and names
+const cardImages = [
+  { name: 'card1', image: 'https://cf-images.us-east-1.prod.boltdns.net/v1/static/5359769168001/0a823cb0-01a9-4835-a348-c64187783ccb/d37cb96c-805c-4aa2-9f2f-e62d9eb814c7/1280x720/match/image.jpg' },
+  { name: 'card2', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHV6kkKi30Bj6JeqBa7yQdn03Z-nEeuNWr4w&s' },
+  { name: 'card3', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaQX2q7xp1KH5xqwf2gx_0Pk4s0R8N421kYg&s' },
+  { name: 'card4', image: 'https://i.pinimg.com/736x/48/95/0c/48950c19001f2fc7b83d12465112902b.jpg' },
+  { name:'card5', image:'https://wallpapers.com/images/featured/thor-pictures-19vj5w60l1w34gcm.jpg'},
+  { name:'card6', image:'https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781481447386/valkyrie-9781481447386_hr.jpg'}
+];
+
+const Newgame = () => {
+  const [cards, setCards] = useState([]);
+  const [flippedCards, setFlippedCards] = useState([]);
+  const [matchedCards, setMatchedCards] = useState([]);
+  const [attempts, setAttempts] = useState(0); // Track number of attempts
+  const [timer, setTimer] = useState(0); // Track time
+  const [isGameOver, setIsGameOver] = useState(false); // Track game over status
+  const [difficulty, setDifficulty] = useState('easy'); // Track difficulty level
+
+  // Start the timer when the component mounts
+  useEffect(() => {
+    let interval;
+
+    if (!isGameOver) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer + 1);
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [isGameOver]); // Add isGameOver as a dependency
+
+  // Shuffle cards based on difficulty and set initial state
+  useEffect(() => {
+    let cardSet = [];
+    if (difficulty === 'easy') {
+      cardSet = cardImages.slice(0, 3); // 3 pairs for easy (6 cards total)
+    } else if (difficulty === 'medium') {
+      cardSet = cardImages.slice(0, 4); // 4 pairs for medium (8 cards total)
+    } else {
+      cardSet = cardImages; // All pairs for hard (12 cards total)
+    }
+
+    const shuffledCards = [...cardSet, ...cardSet] // Duplicate cards for pairs
+      .sort(() => Math.random() - 0.5) // Shuffle the array
+      .map((card, index) => ({ ...card, id: index })); // Assign unique IDs
+    setCards(shuffledCards);
+    setIsGameOver(false);
+    setFlippedCards([]);
+    setMatchedCards([]);
+    setAttempts(0);
+    setTimer(0);
+  }, [difficulty]);
+
+  // Handle card clicks
+  const handleCardClick = (cardId) => {
+    if (flippedCards.length < 2 && !flippedCards.includes(cardId) && !matchedCards.includes(cardId)) {
+      setFlippedCards([...flippedCards, cardId]);
+
+      if (flippedCards.length === 1) {
+        setAttempts(attempts + 1); // Increment attempt count
+
+        const firstCard = cards.find(card => card.id === flippedCards[0]);
+        const secondCard = cards.find(card => card.id === cardId);
+        
+        if (firstCard.name === secondCard.name) {
+          // If cards match
+          setMatchedCards([...matchedCards, firstCard.id, secondCard.id]);
+        }
+
+        // Reset flipped cards after a short delay
+        setTimeout(() => {
+          setFlippedCards([]);
+        }, 1000);
+      }
+    }
+  };
+
+  // Check if the game is over
+  useEffect(() => {
+    if (matchedCards.length === cards.length && cards.length > 0) {
+      setIsGameOver(true); // All pairs matched
+    }
+  }, [matchedCards, cards]);
+
+  // Handle difficulty change
+  const handleDifficultyChange = (level) => {
+    setDifficulty(level);
+  };
+
+  return (
+    <div>
+      <div className="controls">
+        <h1>Avengers Game</h1>
+        <div id='para'>
+          <p className='para1'>Attempts: {attempts}</p>
+          <p className='para'>Time: {isGameOver ? timer : timer}s</p>
+        </div>
+        
+        {isGameOver && <p style={{textAlign:'center', fontWeight:'bold'}}>🎉You Won!!🎉</p>}
+      </div>
+
+      {/* Cards Grid */}
+      <div className={game-container ${difficulty}}>
+        {cards.map((card) => (
+          <Card
+            key={card.id}
+            card={card}
+            onClick={() => handleCardClick(card.id)}
+            isFlipped={flippedCards.includes(card.id) || matchedCards.includes(card.id)}
+          />
+        ))}
+      </div>
+
+      <div id="btn">
+        <button onClick={() => handleDifficultyChange('easy')}>Easy</button>
+        <button onClick={() => handleDifficultyChange('medium')}>Medium</button>
+        <button onClick={() => handleDifficultyChange('hard')}>Hard</button>
+      </div>
+    </div>
+  );
+};
+
+export default Newgame;
+
+
+
+Purpose of flippedCards.includes(card.id) || matchedCards.includes(card.id):
+
+    This line checks if the card.id is present in either flippedCards or matchedCards.
+    flippedCards is an array that stores the IDs of cards that are currently flipped over (face up).
+    matchedCards is an array that contains the IDs of cards that have already been successfully matched with another card.
+    includes(card.id): The includes method checks if card.id is present in flippedCards or matchedCards.
+        If true (the card is either flipped or matched), the card’s image will be displayed.
+        If false (the card is not flipped and not matched), the placeholder will be displayed.
